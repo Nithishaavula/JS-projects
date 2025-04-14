@@ -1,0 +1,961 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>page1.html</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <style>
+        *{
+            margin:0;
+            padding:0;
+            box-sizing:border-box;
+        }
+        body {
+            font-family: Arial, sans-serif;
+            background-color: orange;
+            width:100vw;
+            height:100vh;
+            background-color: black;
+            color:white;
+        }
+        h1 {
+            color: #4CAF50;
+        }
+        .logout{
+            background-color:white; /* Blue */
+            border: none;
+            color: white;
+            padding: 15px 32px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            cursor: pointer;
+        }
+        .profile{
+            background-color:black; /* Blue */
+            border: 2px solid white;
+            color: white;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 2rem;
+            margin: 4px 2px;
+            cursor: pointer;
+            border-radius: 50%;
+        }
+        .search-box input{
+            width:100%;
+            border-radius: 15px;
+            padding:1.5%;
+            border:none;
+            outline:none;
+        }
+       .search-box #search{
+            position: absolute;
+            top:50%;
+            left:10px;
+            transform:translateY(-50%);
+            color:black;
+            font-size: 1.5rem;
+            cursor: pointer;
+            margin:0;
+
+        }
+        .search-box{
+            position:relative;
+            width: 50%;
+            margin: 0 auto;
+            padding: 1rem;
+            background-color: white;
+            border-radius: 15px;
+            box-shadow: 0px 0px 5px 5px whiteSmoke;
+            
+        }
+        .header{
+            display:flex;
+            justify-content: space-around;
+            align-content: center;
+            padding-top: 1rem;
+            gap:2rem;
+            flex-wrap:wrap;
+            box-shadow: 0px 0px 5px 5px whiteSmoke;
+        }
+        .header div i{
+            font-size: 2rem;
+        }
+        .header button {
+            background-color:black;
+            color: white ;
+            border:none;
+            cursor: pointer;
+        }
+        .header p{
+            color:white;
+        }
+        .cart{
+            background-color:black;
+            color:white;
+            display:flex;
+            flex-wrap:wrap;
+            justify-content: center;
+            padding:2rem;
+            gap:4rem;
+           
+        }
+       
+        .cart img{
+            width: 100px;
+            height: 100px;
+            border-radius: 10px;
+        }
+
+        .cart .rate{
+            background-color: #4CAF50;
+            display:flex;
+            justify-content: center;
+            border-radius: 5px;
+            padding:5%;
+            box-shadow: 0px 0px 5px 5px green;
+            border:2px outset green;
+        }
+        .fruits{
+            background-color: white;
+            display:flex;
+            flex-wrap:wrap;
+            justify-content: center;
+            padding:2rem;
+            gap:4rem;
+        }
+        .vegetables{
+            background-color: white;
+            display:flex;
+            flex-wrap:wrap;
+            justify-content: center;
+            padding:2rem;
+            gap:4rem;
+        }
+        .groceries{
+            background-color: white;
+            display:flex;
+            flex-wrap:wrap;
+            justify-content: center;
+            padding:2rem;
+            gap:4rem;
+        }
+        .two2{
+            display:flex;
+            justify-content: center;
+            align-items: center;
+            padding-top: 1rem;
+            gap:2rem;
+            flex-wrap:wrap;
+            width:100vw;
+        }
+    </style>
+</head>
+<body>
+    <div class="one">
+    <button class="profile" id="profile" onclick='profile()'>
+        <i class="fa-solid fa-user"></i>
+    </button>
+    </div>
+    <div class="two">
+        <div class="search-box">
+            <i class="fa-solid fa-magnifying-glass" id="search"></i>
+        <input type="search" >
+        </div>
+        
+    </div>
+    <div class="header">
+        <div id="all">
+             <button onclick="all()" id="btn1"><i class="fa-solid fa-suitcase"></i></button>
+             <p>All</p>
+             
+        </div>
+        <div id="f">
+            <button><i class="fa-solid fa-apple-whole"></i></button>
+            <p>Fruits</p>
+        </div>
+        <div id="v">
+            <button><i class="fa-solid fa-pepper-hot"></i></button>
+            <p>Vegetables</p>
+     </div>
+        <div id="g">
+                <button><i class="fa-solid fa-basket-shopping"></i></button>
+                <p>Groceries</p>
+         </div>       
+</div>
+<!-- pages -->
+ <div class="cards" id="cards">
+   <div class="cart" id="cart">
+    </div>
+    <!-- fruits -->
+    <div class="fruits" id="fruits" class="cart">
+    </div>
+    <!-- vegetables -->
+    <div class="vegetables" id="vegetables" class="cart"></div>
+    <!-- groceries -->
+    <div class="groceries" id="groceries" class="cart"></div>
+ </div>
+ <!-- view carts -->
+
+    <!-- cart1 -->
+    
+    <!-- <div>
+        <div class="rate"><i class="fa-solid fa-indian-rupee-sign"></i>27</div>
+      <img src="onion.jpeg" alt="">
+      <p>onion</p>
+      <h6>1kg</h6>
+      <div>4.6(55.7k)</div>
+      <button>Add to Cart</button>
+    </div>
+  -->
+    <script type="module">
+        //script will write here
+
+        //location
+          //console.log(navigator.onLine)
+          let btn=document.createElement('button')
+          btn.innerHTML="get location"
+            document.body.appendChild(btn)
+            btn.addEventListener('click', function(e) 
+            {
+                // Redirect to the login page
+                e.preventDefault();
+                 // Prevent default button behavior
+                 console.log("location")
+                 navigator.geolocation.getCurrentPosition(function(position){
+                    console.log("Latitude: " + position.coords.latitude);
+                    console.log("Longitude: " + position.coords.longitude);
+                }, function(error){
+                    console.error("Error occurred. Error code: " + error.code);
+                });
+            });
+        let btn1=document.getElementById('profile')
+        btn1.addEventListener('click', function(e)
+        {
+            // Redirect to the login page
+            e.preventDefault();
+             // Prevent default button behavior
+             console.log("profile")
+                window.location.href = "profile.html"; // Redirect to profile.html
+            });
+ //cartstart here  
+ let cartitems=JSON.parse(localStorage.getItem("cart"))||[] 
+          let cart=document.getElementById('cart');
+          cart.style.backgroundColor="black"
+          cart.style.color="white"
+          let imgs=["onion.jpeg","potato.webp","banana.jpeg","water.jpeg","carrot.jpeg","freedom.jpeg","milk.jpeg","indian.jpeg","thumsup.jpeg","eggs.jpeg","dal.jpeg","ashirvad.jpeg"]
+          let names=["onion","Potato","banana","WaterMelon","Carrot","Freedom Refined Sunflower Oil","Heritage Toned Fresh MIlk(Pouch)","IndianGate Rice","thumsUp","Eggs","ToorDal","Aashirvaad Atta"]
+           let weight=["1kg","2kg","Dozen","1piece","1.5kg","5Litres","1/2 litre","1 kg Rice","1 Litre","Tray(30Pieces)","1kg","1kg"]
+           let ratings=["27","34","64","47","34","783","29","100","50","207","167","65"]
+         //  let i=0;
+          for(let i=0;i<=11;i++){
+         let parent=document.createElement("div")
+            parent.style.boxShadow="0px 0px 5px 10px whiteSmoke"
+            parent.style.padding="2rem"
+            parent.style.width="200px"
+            parent.style.borderRadius="10px"
+            parent.style.display="grid"
+            parent.style.margin="1rem"
+            parent.style.border="2px solid white"
+            parent.style.height="auto"
+            parent.style.textAlign="center"
+            parent.style.gap="1rem"
+           
+            let img=document.createElement('img')
+            let name=document.createElement("p")
+            let kg=document.createElement("h6")
+            let rating=document.createElement('i')
+            let addtocart=document.createElement('Button')
+            img.setAttribute("src",imgs[i])
+            name.innerHTML=names[i]
+            kg.innerHTML=weight[i]
+            rating.setAttribute("class","fa-solid fa-indian-rupee-sign")
+            rating.innerHTML=ratings[i];
+            addtocart.innerHTML="Add to Cart"
+            addtocart.setAttribute("id","addtocart")
+            addtocart.style.backgroundColor="black"
+            addtocart.style.color="white"
+            addtocart.style.border="none"
+            addtocart.style.cursor="pointer"
+            addtocart.style.padding="1rem"
+            addtocart.style.borderRadius="10px"
+            addtocart.style.boxShadow="0px 0px 5px 10px whiteSmoke"
+            addtocart.style.marginTop="1rem"
+           addtocart.style.width="100%"
+
+//mouse events in add to cart button
+            addtocart.addEventListener('mouseover', function() {
+                addtocart.style.backgroundColor="white"
+                addtocart.style.color="black"
+                addtocart.style.transition="all 0.5s ease-in-out"
+                addtocart.style.transform="scale(1.1)"
+                addtocart.style.opacity="1"
+                addtocart.style.border="2px solid black"
+               });
+//mouse out event
+              addtocart.addEventListener('mouseout', function() {
+                addtocart.style.backgroundColor="black"
+                addtocart.style.color="white"
+                addtocart.style.transition="all 0.5s ease-in-out"
+                addtocart.style.transform="scale(1)"
+                addtocart.style.opacity="1"
+                addtocart.style.border="none"
+              });
+//mouse click event
+ //add to cart functionality starts here
+            //let addtocarts=document.getElementById('addtocart')
+          
+         addtocart.addEventListener('click',()=>
+         {
+             // Redirect to the login page
+            // Redirect to profile.html
+             //e.preventDefault();
+           let item={
+            name:names[i],
+              img:imgs[i],
+             weight:weight[i],
+            price:ratings[i]
+         };
+          cartitems.push(item)
+ //save to local storage
+          localStorage.setItem("cart",JSON.stringify(cartitems)); 
+             console.log("item added to cart",item);
+              console.log("current cart:",cartitems);
+             alert(`${item.name} added to cart`)  
+             
+      });
+ //add to cart functionality ends here
+           parent.append(img,name,kg,rating,addtocart)
+           cart.append(parent)
+ }
+ let cards=document.getElementById('cards')
+ cards.style.backgroundColor="black"
+ cards.style.color="white"
+ cards.style.height="60vh"
+ cards.style.width="100vw"
+    cards.style.position="absolute"
+    cards.style.top="28%"
+    cards.style.left="0%"
+    cards.style.right="5%"
+    cards.style.bottom="5%"
+    cards.style.borderRadius="10px"
+    cards.style.padding="2rem"
+   // cards.style.boxShadow="0px 0px 5px 10px whiteSmoke"
+    cards.style.zIndex="1000"
+    cards.style.visibility="visible"
+
+ cards.style.overflow="auto"
+    cards.style.display="flex"
+    cards.style.flexWrap="wrap"
+    cards.style.justifyContent="space-around"
+    cards.style.alignItems="center"
+    cards.style.scrollbarWidth="none"
+
+
+          cards.append(cart)
+          document.body.append(cards)
+         
+         
+           console.log(cards)  
+      
+
+
+//click here for all products
+
+  all.addEventListener('click', function(e)
+           {
+
+               // Redirect to the login page
+              // Redirect to profile.html
+              cart=document.getElementById('cart');
+                cart.style.height="auto"
+                cart.style.overflow="auto"
+                cart.style.position="absolute"
+                cart.style.color="black"
+                cart.style.top="0%"
+                cart.style.left="5%"
+                cart.style.right="5%"
+                cart.style.bottom="5%"
+                cart.style.borderRadius="10px"
+                cart.style.padding="2rem"
+                cart.style.zIndex="1000"
+                cart.style.display="flex"
+                cart.style.flexWrap="wrap"
+                cart.style.justifyContent="space-around"
+                cart.style.alignItems="center"
+                cart.style.gap="2rem"
+                cart.style.transition="all 0.5s ease-in-out"
+                cart.style.transform="scale(1.1)"
+                cart.style.opacity="1"
+                cart.style.scrollbarWidth="none"
+                cart.style.visibility="visible"
+                cart.style.overflow="auto"
+                cart.style.backgroundColor="white"
+                cart.style.position="absolute"
+                let a=document.getElementById('fruits')
+                a.style.display="none"
+                let b=document.getElementById('vegetables')
+                b.style.display="none"
+                f.style.display="block"
+                let x=document.getElementById('groceries')
+                x.style.display="none"
+
+               });
+             
+    
+//fruits cart starts here
+               let fruits=document.getElementById('fruits');
+              
+               fruits.style.background="black"
+               fruits.style.width="85vw"
+             fruits.style.padding="1rem"
+//let cart2=[]
+             let fruits1=["apple.jpeg","banana.jpeg","mango.jpeg","grapes.jpg","orange.jpeg","pineapple.jpeg","strawberry.jpeg","blueberry.jpeg","water.jpeg","papaya.jpeg","kiwi.jpeg","peach.jpeg"]
+                let fruit=["Apple","Banana","Mango","Grapes","Orange","Pineapple","Strawberry","Blueberry","Watermelon","Papaya","Kiwi","Peach"]
+                let weight1 =["500gm","1kg","2kg","1kg","1kg","1kg","500gm","1kg","1kg","1kg","500gm","1kg"]
+                let ratings1=["50","40","60","70","80","90","100","110","120","130","140","150"]
+               
+
+                console.log(fruits1)
+            
+                for(let i=0;i<=11;i++){
+                    let parent1=document.createElement("div")
+                    parent1.style.boxShadow="0px 0px 5px 10px whiteSmoke"
+                    parent1.style.padding="1rem"
+                    parent1.style.width="200px"
+                    parent1.style.borderRadius="10px"
+                    parent1.style.background="black"
+                    parent1.style.color="white"
+                    parent1.style.margin="1rem"
+                    parent1.style.border="2px solid white"
+                    parent1.style.height="auto"
+                    parent1.style.textAlign="center"
+                    parent1.style.display="grid"
+                    parent1.style.gap="1rem"
+                    parent1.style.color="white"
+                    parent1.setAttribute("id","fruits")
+                  //  console.log(parent1)
+
+                    let img1=document.createElement('img')
+                    let name1=document.createElement("p")
+                    let kg1=document.createElement("h6")
+                    let rating1=document.createElement('i')
+                    let addtocart1=document.createElement('Button')
+                    img1.setAttribute("src",fruits1[i])
+                    img1.style.height="100px"
+                    name1.innerHTML=fruit[i]
+                    kg1.innerHTML=ratings1[i]
+                    rating1.setAttribute("class","fa-solid fa-indian-rupee-sign")
+                    rating1.innerHTML=ratings[i];
+                    addtocart1.innerHTML="Add to Cart"
+                    addtocart1.setAttribute("id","addtocart")
+                    addtocart1.style.backgroundColor="black"
+                    addtocart1.style.color="white"
+                    addtocart1.style.border="none"
+                    addtocart1.style.cursor="pointer"
+                    addtocart1.style.padding="1rem"
+                    addtocart1.style.borderRadius="10px"
+                    addtocart1.style.boxShadow="0px 0px 5px 10px whiteSmoke"
+                    addtocart1.style.marginTop="1rem"
+                    addtocart1.style.width="100%"
+ //mouse events in add to cart button
+        addtocart1.addEventListener('mouseover', function() {
+            addtocart1.style.backgroundColor="white"
+            addtocart1.style.color="black"
+            addtocart1.style.transition="all 0.5s ease-in-out"
+            addtocart1.style.transform="scale(1.1)"
+            addtocart1.style.opacity="1"
+            addtocart1.style.border="2px solid black"
+           });
+//mouse out event
+          addtocart1.addEventListener('mouseout', function() {
+            addtocart1.style.backgroundColor="black"
+            addtocart1.style.color="white"
+            addtocart1.style.transition="all 0.5s ease-in-out"
+            addtocart1.style.transform="scale(1)"
+            addtocart1.style.opacity="1"
+            addtocart1.style.border="none"
+          });
+//add to cart functionality starts here
+                    addtocart1.addEventListener('click',()=>
+                    {
+                        // Redirect to the login page
+                       // Redirect to profile.html
+                        //e.preventDefault();
+                      let item={
+                       name:fruit[i],
+                         img:fruits1[i],
+                        weight:weight1[i],
+                       price:ratings1[i]
+                    };
+                     cartitems.push(item)
+                     localStorage.setItem("cart",JSON.stringify(cartitems)); 
+                        console.log("item added to cart",item);
+                         console.log("current cart:",cartitems);
+                        alert(`${item.name} added to cart`)      
+                 });
+
+    
+                    parent1.append(img1,name1,kg1,rating1,addtocart1)
+                    fruits.append(parent1)
+                    fruits.style.display="flex"
+                    fruits.style.flexWrap="wrap"
+                    fruits.style.justifyContent="space-around"
+
+
+                }
+                cards.append(fruits)
+                document.body.append(cards)
+                console.log(fruits)
+                let f=document.getElementById('f')
+//fruits click here
+                f.addEventListener('click', function(e)
+                {
+                    // Redirect to the login page
+                   // Redirect to profile.html
+                   fruits.style.visibility="visible"
+                   fruits.style.display="block !important"
+                   fruits.style.width="90vw"
+                   fruits.style.height="auto"
+                   fruits.style.overflow="auto"
+                   fruits.style.backgroundColor="black"
+                   fruits.style.color="white"
+                   fruits.style.position="absolute"
+                   fruits.style.top="0%"
+                   fruits.style.left="5%"
+                   fruits.style.right="5%"
+                   fruits.style.bottom="5%"
+                   fruits.style.borderRadius="10px"
+                   fruits.style.padding="2rem"
+                   //fruits.style.boxShadow="0px 0px 5px 10px whiteSmoke"
+                   fruits.style.zIndex="1000"
+                   fruits.style.display="flex"
+                   fruits.style.flexWrap="wrap"
+                   fruits.style.justifyContent="space-around"
+                   fruits.style.alignItems="center"
+                   fruits.style.gap="2rem"
+                   fruits.style.transition="all 0.5s ease-in-out"
+                   fruits.style.transform="scale(1.1)"
+                   fruits.style.opacity="1"
+                   fruits.style.scrollbarWidth="none"
+
+                let c=document.getElementById('cart')
+                   c.style.display="none"
+                    
+                    c.style.display="flex"
+                    c.style.overflow="hidden"
+        
+                    c.style.backgroundColor="white"
+                    c.style.position="absolute";
+                    let d=document.getElementById('vegetables')
+                    d.style.display="none"
+                    let x=document.getElementById('groceries')
+                    x.style.display="none"
+                    let y=document.getElementById('cart')
+                    y.style.display="none"
+                    
+                });
+ //vegetables cart starts here
+                let vegetables=document.getElementById('vegetables');
+              //  vegetables.style.visibility="hidden"
+              //  vegetables.style.width="85vw"
+                vegetables.style.background="black"
+                vegetables.style.padding="1rem"
+                let cart2=[]
+            
+                let ratings2=["50","40","60","70","80","90","100","110","120","130","140","150"]
+                let vegetables1=["onion.jpeg","potato.webp","cabbage.jpeg","cucumber.jpeg","carrot.jpeg","Ladies.webp","spinach.jpeg","tomato.jpeg","cauliflower.jpeg","broccoli.jpeg","papaya.jpeg","zucchini.webp"]
+                let vegetable=["Onion","Potato","cabbage","cucumber","carrot","Ladies finger","Spinach)","Tomato","cauliflower","Broccolli","papaya","Zucchini"]
+                let weight2 =["1kg","2kg","Dozen","1piece","1.5kg","5Litres","1/2 litre","1 kg Rice","1 Litre","Tray(30Pieces)","1kg","1kg"]
+                //
+              //  vegetables.style.width="85vw"
+               console.log(vegetables1)
+                for(let i=0;i<=11;i++){
+                    let parent2=document.createElement("div")
+                    parent2.style.boxShadow="0px 0px 5px 10px whiteSmoke"
+                    parent2.style.padding="1rem"
+                    parent2.style.width="150px"
+                    parent2.style.borderRadius="10px"
+                    parent2.style.background="black"
+                    parent2.style.margin="1rem"
+                    parent2.style.height="auto"
+                    parent2.style.textAlign="center"
+                    parent2.style.display="grid"
+                    parent2.style.gap="1rem"
+                    parent2.style.color="white"
+                    parent2.style.border="2px solid white"
+                    parent2.style.boxShadow="0px 0px 5px 10px whiteSmoke"
+                    parent2.style.padding="1rem"
+                    parent2.style.width="200px"
+                    parent2.style.borderRadius="10px"
+                    parent2.style.margin="1rem"
+                    parent2.style.border="2px solid white"
+                    let img2=document.createElement('img')
+                    let name2=document.createElement("p")
+                    let kg2=document.createElement("h6")
+                    let rating2=document.createElement('i')
+                    let addtocart2=document.createElement('Button')
+                    img2.setAttribute("src",vegetables1[i])
+                    img2.style.height="100px"
+                    name2.innerHTML=vegetable[i]
+                    kg2.innerHTML=ratings1[i]
+                    rating2.setAttribute("class","fa-solid fa-indian-rupee-sign")
+                    rating2.innerHTML=ratings[i];
+                    addtocart2.innerHTML="Add to Cart"
+                    addtocart2.setAttribute("id","addtocart")
+                    addtocart2.style.backgroundColor="black"
+                    addtocart2.style.color="white"
+                    addtocart2.style.border="none"
+                    addtocart2.style.cursor="pointer"
+                    addtocart2.style.padding="1rem"
+                    addtocart2.style.borderRadius="10px"
+                    addtocart2.style.boxShadow="0px 0px 5px 10px whiteSmoke"
+                    addtocart2.style.marginTop="1rem"
+                    addtocart2.style.width="100%"
+//mouse events in add to cart button
+//mouse events in add to cart button
+addtocart2.addEventListener('mouseover', function() {
+    addtocart2.style.backgroundColor="white"
+    addtocart2.style.color="black"
+    addtocart2.style.transition="all 0.5s ease-in-out"
+    addtocart2.style.transform="scale(1.1)"
+    addtocart2.style.opacity="1"
+    addtocart2.style.border="2px solid black"
+   });
+//mouse out event
+  addtocart2.addEventListener('mouseout', function() {
+    addtocart2.style.backgroundColor="black"
+    addtocart2.style.color="white"
+    addtocart2.style.transition="all 0.5s ease-in-out"
+    addtocart2.style.transform="scale(1)"
+    addtocart2.style.opacity="1"
+    addtocart2.style.border="none"
+  });
+                    //add to cart functionality starts here
+                    addtocart2.addEventListener('click',()=>
+                    {
+                        // Redirect to the login page
+                       // Redirect to profile.html
+                        //e.preventDefault();
+                      let item={
+                       name:vegetable[i],
+                         img:vegetables[i],
+                        weight:weight2[i],
+                       price:ratings2[i]
+                    };
+                     cartitems.push(item)
+                     localStorage.setItem("cart",JSON.stringify(cartitems)); 
+                        console.log("item added to cart",item);
+                         console.log("current cart:",cartitems);
+                        alert(`${item.name} added to cart`)      
+                 });
+                  
+                    parent2.append(img2,name2,kg2,rating2,addtocart2)
+                    vegetables.append(parent2)
+                    vegetables.style.display="flex"
+                    vegetables.style.flexWrap="wrap"
+                    vegetables.style.justifyContent="space-around"
+                }
+        //add to cart functionality ends here
+    
+                //document.body.append(cards)
+                //document.body.append(vegetables)
+                //console.log(vegetables)
+              //  let cards=document.getElementById('cards')
+                cards.append(vegetables)
+            document.body.append(cards)
+                console.log(vegetables)
+                let v=document.getElementById('v')
+                v.addEventListener('click', function(e)
+                {
+                    // Redirect to the login page
+                   // Redirect to profile.html
+                   vegetables.style.visibility="visible"
+                   vegetables.style.visibility="visible"
+                   vegetables.style.width="90vw"
+                   vegetables.style.height="auto"
+                   vegetables.style.overflow="auto"
+                   vegetables.style.backgroundColor="black"
+                   vegetables.style.position="absolute"
+                   vegetables.style.top="0%"
+                   vegetables.style.left="5%"
+                   vegetables.style.right="5%"
+                   vegetables.style.bottom="5%"
+                   vegetables.style.borderRadius="10px"
+                   vegetables.style.padding="2rem"
+                 //  vegetables.style.boxShadow="0px 0px 5px 10px whiteSmoke"
+                   vegetables.style.zIndex="1000"
+                   vegetables.style.display="flex"
+                   vegetables.style.flexWrap="wrap"
+                   vegetables.style.justifyContent="space-around"
+                   vegetables.style.alignItems="center"
+                   vegetables.style.gap="2rem"
+                   let f=document.getElementById('fruits')
+                f.style.visibility="visible"
+                f.style.width="0px"
+                   vegetables.style.transition="all 0.5s ease-in-out"
+                   vegetables.style.transform="scale(1.1)"
+                   vegetables.style.opacity="1"
+                   vegetables.style.scrollbarWidth="none"
+                let c=document.getElementById('cart')
+                   c.style.display="none"
+                    
+                    c.style.display="flex"
+                    c.style.overflow="hidden"
+        
+                    c.style.backgroundColor="white"
+                    c.style.position="absolute";
+                    let d=document.getElementById('fruits')
+                 d.style.display="none"
+                 let x=document.getElementById('groceries')
+                 x.style.display="none"
+                    let y=document.getElementById('cart')
+                    y.style.display="none"
+                });
+ //groceries
+                let groceries=document.getElementById('groceries');
+                groceries.style.background="black"
+//creation of arrays
+                let groceries1=["thumsup.jpeg","milk.jpeg","freedom.jpeg","indian.jpeg","curd.jpeg","dryfruits.jpeg","dal.jpeg","ashirvad.jpeg","dal.jpeg","rice.jpeg","redchilli.jpeg","meat.jpeg"]
+                let grocery=["Thumsup","Milk","Freedom Oil","Basmathi Rice","Curd","dryfruits","kandi pappu","ashirvad","Toor dall","Kurnool Rice","Redchilli Powder","Meat"]
+                let weight3 =["1litre","1/2litre","1litre","1kg","1kg","1kg","1kg","1kg","1kg","1kg","1kg","1kg"]
+                let ratings3=["27","34","64","47","34","783","29","100","50","207","167","65"]
+                console.log(groceries1)
+                for(let i=0;i<=11;i++){
+                    let parent3=document.createElement("div")
+                    parent3.style.padding="2rem"
+                    parent3.style.width="200px"
+                    parent3.style.borderRadius="10px"
+                    parent3.style.background="black"
+                    parent3.style.color="white"
+                    parent3.style.margin="1rem"
+                    parent3.style.display="grid"
+                    parent3.style.gap="1rem"
+                    parent3.style.border="2px solid white"
+                    parent3.style.boxShadow="0px 0px 5px 10px whiteSmoke"
+                    let img3=document.createElement('img')
+                    let name3=document.createElement("p")
+                    let kg3=document.createElement("h6")
+                    let rating3=document.createElement('i')
+                    let addtocart3=document.createElement('Button')
+                    img3.setAttribute("src",groceries1[i])
+                    img3.style.height="100px"
+                    name3.innerHTML=grocery[i]
+                    kg3.innerHTML=ratings1[i]
+                    rating3.setAttribute("class","fa-solid fa-indian-rupee-sign")
+                    rating3.innerHTML=ratings[i];
+                    addtocart3.innerHTML="Add to Cart"
+                    addtocart3.setAttribute("id","addtocart")
+                    addtocart3.style.backgroundColor="black"
+                    addtocart3.style.color="white"
+                    addtocart3.style.border="none"
+                    addtocart3.style.cursor="pointer"
+                    addtocart3.style.padding="1rem"
+                    addtocart3.style.borderRadius="10px"
+                    addtocart3.style.boxShadow="0px 0px 5px 10px whiteSmoke"
+                    addtocart3.style.marginTop="1rem"
+                    addtocart3.style.width="100%"
+//mouse events in add to cart button
+addtocart3.addEventListener('mouseover', function() {
+    addtocart3.style.backgroundColor="white"
+    addtocart3.style.color="black"
+    addtocart3.style.transition="all 0.5s ease-in-out"
+    addtocart3.style.transform="scale(1.1)"
+    addtocart3.style.opacity="1"
+    addtocart3.style.border="2px solid black"
+   });
+//mouse out event
+  addtocart3.addEventListener('mouseout', function() {
+    addtocart3.style.backgroundColor="black"
+    addtocart3.style.color="white"
+    addtocart3.style.transition="all 0.5s ease-in-out"
+    addtocart3.style.transform="scale(1)"
+    addtocart3.style.opacity="1"
+    addtocart3.style.border="none"
+  });
+                    //add to cart functionality starts here
+                    addtocart3.addEventListener('click',()=>
+                    {
+                        // Redirect to the login page
+                       // Redirect to profile.html
+                        //e.preventDefault();
+                      let item={
+                       name:grocery[i],
+                         img:groceries1[i],
+                        weight:weight3[i],
+                       price:ratings3[i]
+                    };
+                     cartitems.push(item)
+                     localStorage.setItem("cart",JSON.stringify(cartitems)); 
+                        console.log("item added to cart",item);
+                         console.log("current cart:",cartitems);
+                        alert(`${item.name} added to cart`)
+                    });
+                    
+                    
+//add to cart functionality ends here
+                    parent3.append(img3,name3,kg3,rating3,addtocart3)
+                   groceries.append(parent3)
+                   groceries.style.display="flex"
+                   groceries.style.flexWrap="wrap"
+                   groceries.style.justifyContent="space-around"
+                   parent3.append(img3,name3,kg3,rating3,addtocart3)
+
+                }
+//append groceries to cards
+            cards.append(groceries)
+                document.body.append(cards)
+                console.log(groceries)
+                let g=document.getElementById('g')
+//click here for groceries
+                g.addEventListener('click', function(e)
+                {
+                    // Redirect to the login page
+                   // Redirect to profile.html
+                   groceries.style.display="block"
+                   groceries.style.width="90vw"
+                   groceries.style.height="auto"
+                   groceries.style.overflow="auto"
+                   groceries.style.backgroundColor="black"
+                   groceries.style.color="white"
+                   groceries.style.position="absolute"
+                   groceries.style.top="0%"
+                   groceries.style.left="5%"
+                   groceries.style.right="5%"
+                   groceries.style.bottom="5%"
+                   groceries.style.borderRadius="10px"
+                   groceries.style.padding="1rem"
+                   groceries.style.zIndex="1000"
+                   groceries.style.display="flex"
+                   groceries.style.flexWrap="wrap"
+                   groceries.style.justifyContent="space-around"
+                   groceries.style.alignItems="center"
+                   groceries.style.gap="1rem"
+                   groceries.style.transition="all 0.5s ease-in-out"
+                   groceries.style.transform="scale(1.1)"
+                   groceries.style.opacity="1"
+                   groceries.style.scrollbarWidth="none"
+                let c=document.getElementById('cart')
+                   c.style.display="none"
+                    let d=document.getElementById('fruits')
+                 d.style.display="none"
+                    let x=document.getElementById('vegetables')
+                    x.style.display="none"
+                    let y=document.getElementById('cart')
+                    y.style.display="none"
+
+                });
+//carts
+let viewcart=document.createElement('div')
+//viewcart.style.boxShadow="0px 0px 5px 10px whiteSmoke"
+//viewcart.style.padding="2rem"
+viewcart.style.width="95vw"
+//viewcart.style.borderRadius="10px"
+viewcart.style.background="white"
+viewcart.style.margin="1rem"
+viewcart.style.border="2px solid white"
+viewcart.style.position="absolute"
+//viewcart.style.top="5%"
+viewcart.style.right="0%"
+viewcart.style.bottom="0%"
+viewcart.style.left="0%"
+viewcart.style.borderRadius="10px"
+viewcart.style.zIndex="1000"
+viewcart.style.display="flex"
+viewcart.style.justifyContent="space-around"
+viewcart.style.alignItems="center"
+viewcart.style.gap="2rem"
+viewcart.style.transition="all 0.5s ease-in-out"
+ let div1=document.createElement('button')
+ let div2=document.createElement('button')
+ //div1 starts here
+div1.style.backgroundColor="white"
+div1.innerHTML="instant"
+div1.style.fontSize="2rem"
+div1.style.color="black"
+div1.style.width="100%"
+div1.style.height="100%"
+div1.style.cursor="pointer"
+div1.style.border="none"
+div1.style.opacity="1"
+div1.style.transition="all 0.5s ease-in-out"
+div1.style.transform="scale(1)"
+div1.style.padding="5px"
+div1.addEventListener('mouseover', function() {
+    div1.style.backgroundColor="black"
+    div1.style.color="white"
+    div1.style.transition="all 0.5s ease-in-out"
+    div1.style.transform="scale(1.1)"
+    div1.style.opacity="1"
+    div1.style.border="2px solid white"
+   });
+//div2 starts here
+div2.addEventListener('mouseover', function() {
+    div2.style.backgroundColor="black"
+    div2.style.color="white"
+    div2.style.transition="all 0.5s ease-in-out"
+    div2.style.transform="scale(1.1)"
+    div2.style.opacity="1"
+    div2.style.border="2px solid white"
+   });
+//mouse out event
+    div1.addEventListener('mouseout', function() {
+        div1.style.backgroundColor="white"
+        div1.style.color="black"
+        div1.style.transition="all 0.5s ease-in-out"
+        div1.style.transform="scale(1)"
+        div1.style.opacity="1"
+        div1.style.border="none"
+    });
+
+//mouse out event
+    div2.addEventListener('mouseout', function() {
+        div2.style.backgroundColor="white"
+        div2.style.color="black"
+        div2.style.transition="all 0.5s ease-in-out"
+        div2.style.transform="scale(1)"
+        div2.style.opacity="1"
+        div2.style.border="none"
+    });
+//click event for div1
+    div1.addEventListener('click', function(e)
+        {
+            // Redirect to the login page
+             // Prevent default button behavior
+             console.log("instant")
+                window.location.href = "page1.html"; // Redirect to profile.html
+            });
+//click event for div2
+    div2.addEventListener('click', function(e)
+        {
+            // Redirect to the login page
+             // Prevent default button behavior
+             console.log("cart")
+                window.location.href = "page4.html"; // Redirect to profile.html
+            });
+//div2 starts here
+div2.style.backgroundColor="white"
+div2.innerHTML=`<i class="fa-solid fa-cart-shopping"></i>`
+div2.style.padding="5px"
+div2.style.fontSize="2rem"
+div2.style.color="black"
+div2.style.width="100%"
+div2.style.height="100%"
+div2.style.cursor="pointer"
+div2.style.border="none"
+div2.style.opacity="1"
+div2.style.transition="all 0.5s ease-in-out"
+div2.style.transform="scale(1)"
+//div2.style.boxShadow="0px 0px 5px 10px whiteSmoke"
+//div1.style.marginTop="1rem"
+viewcart.append(div1,div2)
+document.body.append(viewcart)
+console.log(viewcart)
+         </script>
+</body>
+</html>

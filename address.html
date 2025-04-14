@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head><title>Address & Order</title></head>
+<body style="font-family:sans-serif;padding:20px">
+  <h2>🛒 Your Order Summary</h2>
+  <div id="cartItems"></div>
+
+  <h3>📦 Delivery Address</h3>
+  <div id="deliveryAddress"></div>
+
+  <script>
+    let cart = JSON.parse(localStorage.getItem("cart")) || [];
+    let address = localStorage.getItem("deliveryAddress") || "Not provided";
+
+    let cartItems = document.getElementById("cartItems");
+    cart.forEach(item => {
+      let p = document.createElement("p");
+      p.innerText = `${item.name} - ₹${item.price}`;
+      cartItems.appendChild(p);
+    });
+
+    document.getElementById("deliveryAddress").innerText = address;
+  </script>
+</body>
+</html>

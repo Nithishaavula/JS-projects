@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign-Up</title>
+    <script type="module">
+            // Import the functions you need from the SDKs you need
+            import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-app.js";
+            import{ getAuth, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-auth.js";
+            // TODO: Add SDKs for Firebase products that you want to use
+            // https://firebase.google.com/docs/web/setup#available-libraries
+          
+            // Your web app's Firebase configuration
+            const firebaseConfig = {
+              apiKey: "AIzaSyDhdNXZSfEgOdtA5Q8EgK8mHxpZqirQAIw",
+              authDomain: "login-sign-924a1.firebaseapp.com",
+              projectId: "login-sign-924a1",
+              storageBucket: "login-sign-924a1.firebasestorage.app",
+              messagingSenderId: "179765758950",
+              appId: "1:179765758950:web:99e4b5c74f078fc268e427"
+            };
+          
+            // Initialize Firebase
+            const app = initializeApp(firebaseConfig);
+            let signup=document.getElementById("SignUp");
+            console.log(signup);
+            signup.addEventListener("click",function(){
+                let email=document.getElementById("email").value;
+                let password=document.getElementById("password").value;
+               // let confirmPassword=document.getElementById("confirm-password").value;
+const auth = getAuth(app);
+createUserWithEmailAndPassword(auth, email, password)
+  .then((userCredential) => {
+    // Signed up 
+    const user = userCredential.user;
+    alert("User Created Successfully");
+    // ...
+  })
+  .catch((error) => {
+    const errorCode = error.code;
+    const errorMessage = error.message;
+    alert(errorMessage);
+    // ..
+  });
+            });
+          </script>
+    <style>
+        *{
+            margin:0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body{
+            background-color: orange;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+div{
+    display: grid;
+    justify-content: center;
+    align-items: center;
+    gap:1rem;
+    padding: 5%;
+    background-color: white;
+    font-family: Arial, Helvetica, sans-serif;
+    box-shadow: 0px 0px 18px 10px rgba(22, 22, 22, 0.1);
+
+}
+input{
+    padding:2%;
+    border-radius: 10px;
+    border: 1px solid #ccc;
+}
+        button{
+            background-color: rgb(227, 74, 8);
+            color: white;
+            font-size: 1.5rem;
+            padding: 1% 2%;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+        }
+        button:hover{
+            background-color: orangered;
+        }
+        h2{
+            color: rgb(227, 74, 8);
+            font-size: 3rem;
+        }
+        h3{
+            color: black;
+            font-size: 2rem;
+        }
+    </style>
+</head>
+<body>
+    <div>
+        <h2>Sign-Up</h2>
+        <h3>Welcome to our platform!</h3>
+        <p>Please fill in the details below to create your account.</p>
+
+    <label for="email">Enter your Email:</label>
+    <input type="email" placeholder="Email" id="email" required>
+    <label for="password">Create your Password:</label>
+    <input type="password" placeholder="Password" id="password" required>
+  <!-- <label for="confirm-password">Confirm your Password:</label>
+ <input type="password" placeholder="Confirm Password" id="confirm-password" required> -->
+    <button id="SignUp">Sign-Up</button>
+    </div>
+</body>
+</html>

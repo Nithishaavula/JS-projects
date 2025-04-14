@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color:gray;
+            padding: 10px;
+        }
+        h2 {
+            color: black;
+        }
+        hr {
+            border: 1px solid orange;
+            margin: 20px 0;
+        }
+        .profile {
+            background-color:orange;/* Blue */
+            border: 2px solid white;
+            color: white;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            cursor: pointer;
+            border-radius: 50%;
+        }
+        .logout {
+            background-color:orange; /* Blue */
+            border: none;
+            color: white;
+            padding: 16px 32px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 1rem;
+            cursor: pointer;
+            width:50vw;
+            border-radius: 20px;
+        }
+        .profile-container {
+            display: flex;
+            margin-bottom: 20px;
+            gap:2rem;
+        }
+        .order{
+            background-color:white;/* Blue */
+            border: none;
+            color: orange;
+            padding: 15px 32px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            cursor: pointer;
+            border-radius: 5px;
+            width: 50% 50%;
+            height:10vh;
+        }
+        #orders {
+            display: flex;
+            flex-direction: row;
+            gap: 2rem;
+        }
+        .order i {
+            margin-right: 8px;
+            color:orange;
+        }
+        .your-information {
+            background-color: white;
+            padding: 20px;
+            border-radius: 30px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            margin-top: 20px;
+            width:92vw;
+            border-radius: 20px;
+        }
+        .your-information button {
+            background-color: white;
+            border: none;
+            color: orange;
+            padding: 10px 20px;
+            text-align: left;
+            text-decoration: none;
+            display: block;
+            font-size: 16px;
+            margin: 4px 0;
+            cursor: pointer;
+            width: 100%;
+        }
+        .your-information button i {
+            margin-right: 8px;
+            color: orange;
+            display:inline-block;
+            margin:1rem;
+        }
+        .your-information hr {
+            border: 1px solid orange;
+            margin: 10px ;
+        }
+    </style>
+</head>
+<body>
+    <h2>Settings</h2>
+    <div class="profile-container">
+        <button class="profile" id="profile" onclick='profile()'>
+        <i class="fa-solid fa-user"></i>
+         </button>
+        <h2>Profile name</h2>
+    </div>
+    <hr>
+    <!-- orders -->
+ <div id="orders">
+        <div>
+    <button class="order" id="profile" onclick='order()'>
+        <i class="fa-solid fa-suitcase"></i>
+        Your Orders
+    </button >
+         </div>
+    <div >
+        <button class="order">
+            <i class="fa-brands fa-hire-a-helper"></i>
+            Help and Support
+        </button>
+    </div>
+ </div>
+ <!-- your information -->
+ <h2>Your Information</h2>
+<div class="your-information">
+    
+
+    <div>
+        <button>Your Orders<i class="fa-solid fa-suitcase"></i></button>
+    </div>
+    <hr>
+    <div>
+        <button>Your Address<i class="fa-solid fa-location-dot"></i></button>
+    </div>
+    <hr>
+    <div>
+        <button>Your Payment<i class="fa-solid fa-credit-card"></i></button>
+    </div>
+    <hr>
+    <div>
+        <button>Your Notifications<i class="fa-solid fa-bell"></i></button>
+        </div>
+        <hr>
+    <div>
+        <button>Your Privacy<i class="fa-solid fa-shield"></i></button>
+    </div>
+    <hr>
+    <div>
+        <button>Your Security<i class="fa-solid fa-lock"></i></button>
+    </div>
+    <hr>
+    <div>
+        <button>Rewards<i class="fa-solid fa-gift"></i></button>
+    </div>
+</div>
+    <button class="logout" id="logout">
+        logout
+       </button>
+        <script type="module">
+ //script will write here
+        import { initializeApp } 
+        from "https://www.gstatic.com/firebasejs/11.6.0/firebase-app.js";
+        import{ getAuth} 
+        from "https://www.gstatic.com/firebasejs/11.6.0/firebase-auth.js";
+        // TODO: Add SDKs for Firebase products that you want to use
+        // https://firebase.google.com/docs/web/setup#available-libraries
+      
+        // Your web app's Firebase configuration
+        const firebaseConfig = {
+          apiKey: "AIzaSyDhdNXZSfEgOdtA5Q8EgK8mHxpZqirQAIw",
+          authDomain: "login-sign-924a1.firebaseapp.com",
+          projectId: "login-sign-924a1",
+          storageBucket: "login-sign-924a1.firebasestorage.app",
+          messagingSenderId: "179765758950",
+          appId: "1:179765758950:web:99e4b5c74f078fc268e427"
+        };
+      const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+           let button=document.getElementById('logout')
+            button.addEventListener('click', function(e) 
+            {
+                // Redirect to the login page
+                e.preventDefault();
+                 // Prevent default button behavior
+                 auth.signOut();
+                 console.log("logout")
+                 auth.onAuthStateChanged(user=> {
+                    if (user) {
+                        // User is signed in, redirect to the main page
+                        console.log(user.email +"is signed in!")
+                        window.location.replace("index.html");
+                    } else {
+                        // User is signed out, redirect to the login page
+                        window.location.replace("index.html");
+                    }
+                 });
+            });
+        </script>
+</body>
+</html>

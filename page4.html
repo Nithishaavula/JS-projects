@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Cart Payment</title>
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      background: linear-gradient(to right, #f8f9fa, #e0eafc);
+      margin: 0;
+      padding: 20px;
+      display: flex;
+      justify-content: center;
+    }
+
+    #container {
+      max-width: 700px;
+      background: white;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    }
+
+    h1, h2, h3 {
+      text-align: center;
+      color: #333;
+    }
+
+    button {
+      padding: 10px 20px;
+      margin-top: 15px;
+      font-size: 16px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+
+    .btn-green {
+      background-color: #28a745;
+      color: white;
+    }
+
+    .btn-red {
+      background-color: #dc3545;
+      color: white;
+      margin-left: 10px;
+    }
+
+    input[type="file"], textarea, select {
+      width: 100%;
+      padding: 10px;
+      margin-top: 10px;
+      font-size: 16px;
+      border-radius: 5px;
+    }
+
+    .item-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin: 10px 0;
+    }
+
+    #qrContainer img {
+      width: 200px;
+      border-radius: 10px;
+      margin-top: 10px;
+    }
+
+    #upiButtons a {
+      display: inline-block;
+      margin: 5px;
+      padding: 10px 15px;
+      background-color: #007bff;
+      color: white;
+      border-radius: 5px;
+      text-decoration: none;
+    }
+  </style>
+</head>
+<body>
+  <div id="container">
+    <h1>Your Cart</h1>
+    <div id="cartItems"></div>
+    <h3 id="total">Total: ₹0</h3>
+
+    <label>Select Payment Method:</label>
+    <select id="methodSelect">
+      <option value="UPI">UPI</option>
+      <option value="COD">Cash on Delivery</option>
+    </select>
+
+    <label id="upiLabel"> via </label>
+    <select id="upiSelect">
+      <option value="QR">QR</option>
+      <option value="PhonePe">PhonePe</option>
+      <option value="GPay">GPay</option>
+      <option value="Paytm">Paytm</option>
+    </select>
+
+    <div id="qrContainer"></div>
+    <div id="upiButtons"></div>
+
+    <input type="file" id="screenshotInput" accept="image/*">
+    <textarea id="addressInput" placeholder="Enter your address" style="display: none;"></textarea>
+
+    <button class="btn-green" id="submitBtn">Submit Payment</button>
+    <button class="btn-green" id="addressSubmitBtn" style="display: none;">Submit Address</button>
+    <button class="btn-green" id="orderPlacedBtn" style="display: none;">Order Placed Successfully</button>
+  </div>
+
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-app.js";
+    import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-firestore.js";
+    import { getStorage, ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-storage.js";
+
+    const firebaseConfig = {
+      apiKey: "YOUR_API_KEY",
+      authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
+      projectId: "YOUR_PROJECT_ID",
+      storageBucket: "YOUR_PROJECT_ID.appspot.com",
+      messagingSenderId: "YOUR_MESSAGING_ID",
+      appId: "YOUR_APP_ID"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+    const storage = getStorage(app);
+
+    const cartItemsContainer = document.getElementById("cartItems");
+    const totalDisplay = document.getElementById("total");
+    const methodSelect = document.getElementById("methodSelect");
+    const upiSelect = document.getElementById("upiSelect");
+    const upiLabel = document.getElementById("upiLabel");
+    const qrContainer = document.getElementById("qrContainer");
+    const upiButtons = document.getElementById("upiButtons");
+    const addressInput = document.getElementById("addressInput");
+    const screenshotInput = document.getElementById("screenshotInput");
+    const submitBtn = document.getElementById("submitBtn");
+    const addressSubmitBtn = document.getElementById("addressSubmitBtn");
+    const orderPlacedBtn = document.getElementById("orderPlacedBtn");
+
+    let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+    function renderCart() {
+      cartItemsContainer.innerHTML = "";
+      let total = 0;
+
+      cart.forEach((item, index) => {
+        total += parseFloat(item.price);
+        const row = document.createElement("div");
+        row.classList.add("item-row");
+        row.innerHTML = `
+          <span>${item.name} - ₹${item.price}</span>
+          <button class="btn-red" onclick="removeItem(${index})">Remove</button>
+        `;
+        cartItemsContainer.appendChild(row);
+      });
+
+      totalDisplay.innerText = `Total: ₹${total.toFixed(2)}`;
+    }
+
+    window.removeItem = (index) => {
+      cart.splice(index, 1);
+      localStorage.setItem("cart", JSON.stringify(cart));
+      renderCart();
+    };
+
+    renderCart();
+
+    methodSelect.addEventListener("change", () => {
+      const isUPI = methodSelect.value === "UPI";
+      addressInput.style.display = isUPI ? "none" : "block";
+      screenshotInput.style.display = "block";
+      upiSelect.style.display = isUPI ? "inline" : "none";
+      upiLabel.style.display = isUPI ? "inline" : "none";
+      qrContainer.innerHTML = "";
+      upiButtons.innerHTML = "";
+
+      if (isUPI) {
+        submitBtn.style.display = "inline-block";
+        addressSubmitBtn.style.display = "none";
+      } else {
+        submitBtn.style.display = "none";
+        addressSubmitBtn.style.display = "inline-block";
+      }
+    });
+
+    upiSelect.addEventListener("change", () => {
+      const method = upiSelect.value;
+      const total = cart.reduce((sum, item) => sum + parseFloat(item.price), 0).toFixed(2);
+      const upiID = "aavulan@fifederal";
+      const payeeName = "Aavulan";
+      const transactionNote = "Payment";
+      const currency = "INR";
+
+      if (method === "QR") {
+        qrContainer.innerHTML = `<img src="qr.jpg" alt="QR Code" />`;
+      } else if (["PhonePe", "GPay", "Paytm"].includes(method)) {
+        const url = `upi://pay?pa=${upiID}&pn=${payeeName}&am=${total}&cu=${currency}`;
+        upiButtons.innerHTML = `
+          <a href="${url}" target="_blank">Pay via ${method}</a>
+        `;
+      }
+    });
+
+    submitBtn.addEventListener("click", () => {
+      if (screenshotInput.files.length > 0) {
+        alert("Payment was received! Please check the screenshot.");
+        // Store order with UPI payment
+        const order = {
+          id: new Date().getTime(),
+          items: cart,
+          total: totalDisplay.innerText,
+          paymentStatus: "UPI",
+          screenshot: screenshotInput.files[0].name
+        };
+        const orders = JSON.parse(localStorage.getItem("orders")) || [];
+        orders.push(order);
+        localStorage.setItem("orders", JSON.stringify(orders));
+        orderPlacedBtn.style.display = "block";
+        submitBtn.style.display = "none";
+      } else {
+        alert("Please upload a payment screenshot.");
+      }
+    });
+
+    addressSubmitBtn.addEventListener("click", () => {
+      const address = addressInput.value;
+      if (address.trim()) {
+        // Store order with COD payment
+        const order = {
+          id: new Date().getTime(),
+          items: cart,
+          total: totalDisplay.innerText,
+          address,
+          paymentStatus: "COD"
+        };
+        const orders = JSON.parse(localStorage.getItem("orders")) || [];
+        orders.push(order);
+        localStorage.setItem("orders", JSON.stringify(orders));
+
+        orderPlacedBtn.style.display = "block";
+        addressSubmitBtn.style.display = "none";
+        localStorage.setItem("address", address);
+      }
+    });
+
+    orderPlacedBtn.addEventListener("click", () => {
+      window.location.href = "orders.html"; // Redirect to the Orders Page
+    });
+  </script>
+</body>
+</html>
+
+
+
+
+
+
+
+

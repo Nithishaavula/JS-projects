@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Delivery Location with Select</title>
+  <style>
+
+</style>
+</head>
+<body>
+  
+ 
+    
+    <!-- cart.html -->
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title>Cart</title>
+      <style>
+        body {
+          font-family: Arial, sans-serif;
+          padding: 40px;
+          background-color: #f0f8ff;
+        }
+        #container {
+          max-width: 800px;
+          margin: auto;
+        }
+        #item {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          background-color: white;
+          padding: 20px;
+          border: 1px solid #ccc;
+          border-radius: 8px;
+          margin-bottom: 10px;
+        }
+        #item button {
+          background-color: red;
+          color: white;
+          border: none;
+          padding: 10px;
+          border-radius: 5px;
+          cursor: pointer;
+        }
+        #item button:hover {
+          background-color: darkred;
+        }
+        #payBtn {
+          margin-top: 30px;
+          background-color: green;
+          color: white;
+          padding: 15px 30px;
+          font-size: 18px;
+          border: none;
+          border-radius: 8px;
+          cursor: pointer;
+        }
+        #payBtn:hover {
+          background-color: darkgreen;
+        }
+        img {
+          margin-top: 20px;
+        }
+        .address {
+          width:100%;
+          margin-top: 20px;
+          background-color: #fff;
+          padding: 20px;
+          border-radius: 8px;
+          box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+          display: none;
+        }
+        .address input {
+          width: 100%;
+          padding: 10px;
+          margin: 10px 0;
+          border: 1px solid #ccc;
+          border-radius: 5px;
+          overflow: hidden;
+          box-sizing: border-box;
+          font-size: 16px;
+          font-family: Arial, sans-serif;
+
+        }
+        .address input:focus {
+          border-color: #007bff;
+          outline: none;
+        }
+        #btn{
+          background-color: #007bff;
+          color: white;
+          padding: 10px 20px;
+          border: none;
+          border-radius: 5px;
+          cursor: pointer;
+          font-size: 16px;
+          display:none;
+        }
+        button:hover {
+          background-color: #0056b3;
+        }
+        h2 {
+          color: #333;
+          font-size: 24px;
+          margin-bottom: 20px;
+        }
+        h3 {
+          color: #555;
+          font-size: 20px;
+          margin-bottom: 10px;
+        }
+        h1 {
+          color: #333;
+          font-size: 28px;
+          margin-bottom: 20px;
+        }
+      </style>
+    </head>
+    <body>
+      <div id="container"></div>
+      <div class="address">
+        <h2>Enter your address Below:</h2>
+     <input type="text" id="address" placeholder="Enter your address" required style="width: 100%; padding: 20px; border-radius: 5px; border: 1px solid #ccc; margin-top: 20px; font-size: 16px; font-family: Arial, sans-serif;" />
+     <input type="text" id="pincode" placeholder="Enter your pincode" required style="width: 100%; padding: 20px; border-radius: 5px; border: 1px solid #ccc; margin-top: 20px; font-size: 16px; font-family: Arial, sans-serif;" />
+     <input type="text" id="phone" placeholder="Enter your phone number" required style="width: 100%; padding: 20px; border-radius: 5px; border: 1px solid #ccc; margin-top: 20px; font-size: 16px; font-family: Arial, sans-serif;" />
+      <input type="text" id="name" placeholder="Enter your name" required style="width: 100%; padding: 20px; border-radius: 5px; border: 1px solid #ccc; margin-top: 20px; font-size: 16px; font-family: Arial, sans-serif;" />
+      <input type="text" id="email" placeholder="Enter your email" required style="width: 100%; padding: 20px; border-radius: 5px; border: 1px solid #ccc; margin-top: 20px; font-size: 16px; font-family: Arial, sans-serif;" />
+      <input type="text" id="city" placeholder="Enter your city" required style="width: 100%; padding: 20px; border-radius: 5px; border: 1px solid #ccc; margin-top: 20px; font-size: 16px; font-family: Arial, sans-serif;" />
+      <input type="text" id="state" placeholder="Enter your state" required style="width: 100%; padding: 20px; border-radius: 5px; border: 1px solid #ccc; margin-top: 20px; font-size: 16px; font-family: Arial, sans-serif;" />
+      <input type="text" id="country" placeholder="Enter your country" required style="width: 100%; padding: 20px; border-radius: 5px; border: 1px solid #ccc; margin-top: 20px; font-size: 16px; font-family: Arial, sans-serif;" />
+      <input type="text" id="landmark" placeholder="Enter your landmark" required style="width: 100%; padding: 20px; border-radius: 5px; border: 1px solid #ccc; margin-top: 20px; font-size: 16px; font-family: Arial, sans-serif;" />
+      </div>
+      <br/>
+      <br/>
+     <button id="btn">submit</button>
+      <script src="https://code.jquery.com/jquery-3.6.0.min.js">
+      </script>
+      <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+      <script>
+        let cart = JSON.parse(localStorage.getItem("cart")) || [];
+        let container = document.getElementById("container");
+    
+        if (cart.length === 0) {
+          container.innerHTML = "<h2>Your cart is empty 🛒</h2>";
+        } else {
+          container.innerHTML = "<h2>Items in your cart:</h2><br/>";
+          let total = 0;
+    
+          cart.forEach((item, index) => {
+            total += Number(item.price);
+    
+            let div = document.createElement("div");
+            div.id = "item";
+            div.innerHTML = `${item.name} - ₹${item.price}`;
+            
+            let removeBtn = document.createElement("button");
+            removeBtn.innerText = "Remove";
+            removeBtn.onclick = () => {
+              cart.splice(index, 1);
+              localStorage.setItem("cart", JSON.stringify(cart));
+              location.reload();
+            };
+    
+            div.appendChild(removeBtn);
+            container.appendChild(div);
+          });
+    
+          let totalEl = document.createElement("div");
+          totalEl.innerHTML = `<h3>Total: ₹${total.toFixed(2)}</h3>`;
+          container.appendChild(totalEl);
+    
+          // Payment options
+          let select = document.createElement("select");
+          ["UPI", "Cash on Delivery"].forEach(method => {
+            let opt = document.createElement("option");
+            opt.value = method;
+            opt.innerText = method;
+            select.appendChild(opt);
+          });
+          container.appendChild(select);
+    
+          // Pay Now Button
+          let payBtn = document.createElement("button");
+          payBtn.id = "payBtn";
+          payBtn.innerText = "Pay Now";
+          container.appendChild(payBtn);
+        //  function one(){
+
+        
+      payBtn.onclick = () => {
+            let method = select.value;
+            if (method === "UPI") 
+            {
+                               let upiId = "9494252566-2@ibl"; // Replace with your UPI ID
+                               let upiUrl = `upi://pay?pa=${upiId}&pn=Shop&am=${total.toFixed(2)}&cu=INR`;
+                               let qr = document.createElement("img");
+                              //   qr.src = `https://chart.googleapis.com/chart?cht=qr&chs=250x250&chl=${encodeURIComponent(upiUrl)}`;
+                               qr.src="qr.jpg";
+                               qr.style.width = "250px";
+                               qr.style.height = "250px";
+                               qr.style.marginTop = "20px";
+                               qr.style.border = "1px solid #ccc";
+                               qr.style.borderRadius = "8px";
+                               qr.alt = "Scan UPI QR";
+            //paymentconformation checkout
+        
+                               let paymentConformation = document.createElement("div");
+                               paymentConformation.innerHTML = `<h1>Payment Confirmation</h1>`;
+                               paymentConformation.style.textAlign = "center";
+                               paymentConformation.style.marginTop = "20px";
+                               paymentConformation.style.fontSize = "24px";
+                               paymentConformation.style.color = "green";
+                               paymentConformation.style.fontWeight = "bold";
+            paymentConformation.style.fontFamily = "Arial, sans-serif";
+           // paymentConformation.style.backgroundColor = "black";
+          container.appendChild(paymentConformation);
+          console.log("conatiner",container);
+            let paymentdetails = document.createElement("div");
+            paymentdetails.innerHTML = `<h3>Payment Details</h3>`;
+            paymentdetails.style.textAlign = "center";
+            paymentdetails.style.marginTop = "20px";
+            paymentdetails.style.fontSize = "20px";
+            paymentdetails.style.color = "green";
+            paymentdetails.style.fontWeight = "bold";
+            paymentdetails.style.fontFamily = "Arial, sans-serif";
+            container.appendChild(paymentdetails);
+              let paymentMethod = document.createElement("div");
+              paymentMethod.innerHTML = `<h3>Payment Method: ${method}</h3>`;
+              paymentMethod.style.textAlign = "center";
+              paymentMethod.style.marginTop = "20px";
+              paymentMethod.style.fontSize = "20px";
+              paymentMethod.style.color = "green";
+              paymentMethod.style.fontWeight = "bold";
+              paymentMethod.style.fontFamily = "Arial, sans-serif";
+              container.appendChild(paymentMethod);
+              let paymentAmount = document.createElement("div");
+              paymentAmount.innerHTML = `<h3>Payment Amount: ₹${total.toFixed(2)}</h3>`;
+              paymentAmount.style.textAlign = "center";
+              paymentAmount.style.marginTop = "20px";
+              paymentAmount.style.fontSize = "20px";
+              paymentAmount.style.color = "green";
+              paymentAmount.style.fontWeight = "bold";
+              paymentAmount.style.fontFamily = "Arial, sans-serif";
+              container.appendChild(paymentAmount);
+              let paymentStatus = document.createElement("div");
+              paymentStatus.innerHTML = `<h3>Payment Status: Pending</h3>`;
+              paymentStatus.style.textAlign = "center";
+              paymentStatus.style.marginTop = "20px";
+              paymentStatus.style.fontSize = "20px";
+              paymentStatus.style.color = "green";
+              paymentStatus.style.fontWeight = "bold";
+              paymentStatus.style.fontFamily = "Arial, sans-serif";
+         //   }
+      //   one();
+              container.appendChild(paymentStatus); 
+              let paymentStatus1 = document.createElement("div");
+              paymentStatus1.innerHTML = `<h3>Payment Status: Successful</h3>`;
+              paymentStatus1.style.textAlign = "center";
+              paymentStatus1.style.marginTop = "20px";
+              paymentStatus1.style.fontSize = "20px";
+              paymentStatus1.style.color = "green";
+              paymentStatus1.style.fontWeight = "bold";
+              paymentStatus1.style.fontFamily = "Arial, sans-serif";
+              paymentStatus1.style.display = "none"; // Hide initially
+              setTimeout(() => {
+                paymentStatus1.style.display = "block"; // Show after payment
+              }, 5000); // Show after 5 seconds
+              paymentStatus1.style.display = "block"; // Show after payment
+              container.appendChild(paymentStatus1);
+              let paymentStatus2 = document.createElement("div");
+              paymentStatus2.innerHTML = `<h3>Payment Status: Failed</h3>`;
+              paymentStatus2.style.textAlign = "center";
+              paymentStatus2.style.marginTop = "20px";
+              paymentStatus2.style.fontSize = "20px";
+              paymentStatus2.style.color = "green";
+              paymentStatus2.style.fontWeight = "bold";
+              paymentStatus2.style.fontFamily = "Arial, sans-serif";
+              container.appendChild(paymentStatus2);
+              let paymentStatus3 = document.createElement("div");
+              paymentStatus3.innerHTML = `<h3>Payment Status: Cancelled</h3>`;
+              paymentStatus3.style.textAlign = "center";
+              paymentStatus3.style.marginTop = "20px";
+              paymentStatus3.style.fontSize = "20px";
+              paymentStatus3.style.color = "green";
+              paymentStatus3.style.fontWeight = "bold";
+              paymentStatus3.style.fontFamily = "Arial, sans-serif";
+              container.appendChild(paymentStatus3);
+              let paymentStatus4 = document.createElement("div");
+              paymentStatus4.innerHTML = `<h3>Payment Status: Refunded</h3>`;
+
+              paymentStatus4.style.textAlign = "center";
+              paymentStatus4.style.marginTop = "20px";
+              paymentStatus4.style.fontSize = "20px";
+              paymentStatus4.style.color = "green";
+              paymentStatus4.style.fontWeight = "bold";
+              paymentStatus4.style.fontFamily = "Arial, sans-serif";
+              container.appendChild(paymentStatus4);
+              let paymentStatus5 = document.createElement("div");
+              paymentStatus5.innerHTML = `<h3>Payment Status: Disputed</h3>`;
+              paymentStatus5.style.textAlign = "center";
+              paymentStatus5.style.marginTop = "20px";
+              paymentStatus5.style.fontSize = "20px";
+              paymentStatus5.style.color = "green";
+              paymentStatus5.style.fontWeight = "bold";
+              paymentStatus5.style.fontFamily = "Arial, sans-serif";
+              container.appendChild(paymentStatus5);
+
+
+              
+
+
+              container.appendChild(qr);
+              setTimeout(() => {
+                alert("UPI Payment assumed successful!");
+                localStorage.removeItem("cart");
+                window.location.href = "confirmation.html";
+              }, 500000);
+    
+            } 
+          else if (method === "Cash on Delivery")
+             {
+              // Simulate cash on delivery processing
+             let displayAddress = document.querySelector(".address");
+              displayAddress.style.display = "block";
+              let btn = document.getElementById("btn");
+              btn.style.display = "block";
+              btn.addEventListener("click", () => {
+                let address = document.getElementById("address").value;
+                let pincode = document.getElementById("pincode").value;
+                let phone = document.getElementById("phone").value;
+                let name = document.getElementById("name").value;
+                let email = document.getElementById("email").value;
+                let city = document.getElementById("city").value;
+                let state = document.getElementById("state").value;
+                let country = document.getElementById("country").value;
+                let landmark = document.getElementById("landmark").value;
+                let addressDetails = {
+                  address: address,
+                  pincode: pincode,
+                  phone: phone,
+                  name: name,
+                  email: email,
+                  city: city,
+                  state: state,
+                  country: country,
+                  landmark: landmark
+                };
+                localStorage.setItem("addressDetails", JSON.stringify(addressDetails));
+              });
+
+              // Validate address fields
+              if (!address) {
+                alert("Address is required for Cash on Delivery.");
+                return;
+              }
+              if (!pincode) {
+                alert("Pincode is required for Cash on Delivery.");
+                return;
+              }
+              if (!phone) {
+                alert("Phone number is required for Cash on Delivery.");
+                return;
+              }
+              if (!name) {
+                alert("Name is required for Cash on Delivery.");
+                return;
+              }
+              if (!email) {
+                alert("Email is required for Cash on Delivery.");
+                return;
+              }
+              if (!city) {
+                alert("City is required for Cash on Delivery.");
+                return;
+              }
+              if (!state) {
+                alert("State is required for Cash on Delivery.");
+                return;
+              }
+              if (!country) {
+                alert("Country is required for Cash on Delivery.");
+                return;
+              }
+              if (!landmark) {
+                alert("Landmark is required for Cash on Delivery.");
+                return;
+              }
+              // Simulate payment processing
+              alert(`Payment of ₹${total.toFixed(2)} via ${method} successful!`);
+              localStorage.removeItem("cart");
+              window.location.href = "conformation.html";
+            }
+          
+        // if (method === "Cash on Delivery") {
+        //    payBtn.innerText = "Confirm Cash on Delivery";
+            payBtn.addEventListener("click", () => {
+              //Simulate cash on delivery processing
+              setTimeout(() => {
+            alert(`Payment of ₹${totalPrice.toFixed(2)} ,when delivery person arrives`);
+                localStorage.removeItem("cart");
+                window.location.reload();
+              }, 2000);
+            });
+    
+          }
+          }
+
+        
+        
+      </script>
+    </body>
+    </html>
+    
+    

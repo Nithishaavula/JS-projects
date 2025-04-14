@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+<head><title>Payment Success</title></head>
+<body style="font-family:sans-serif; text-align:center; padding:50px;">
+  <h1>✅ Payment Successful!</h1>
+  <p>Thank you for your purchase.</p>
+
+  <h3>🧾 Payment Screenshot:</h3>
+  <img id="screenshot" src="" width="300" style="border:1px solid #ccc; margin-top:20px;">
+  <script>
+    let img = localStorage.getItem("upiScreenshot");
+    if (img) {
+      document.getElementById("screenshot").src = img;
+    }
+  </script>
+</body>
+</html>

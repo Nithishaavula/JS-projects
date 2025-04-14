@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project</title>
+    
+    <style>
+        *{
+            margin:0;
+            padding: 0;
+            box-sizing: border-box;
+
+        }
+    .login{
+        background-color:orange;
+        display:grid;
+        justify-content: center;
+        align-content:  center;
+        font-family: Arial, Helvetica, sans-serif;
+        height:100vh;
+        width:100vw;
+        gap:2rem;
+       }
+    .childa{
+         display:grid;
+         align-items: center;
+    }
+    .childa h2{
+        color:rgb(227, 74, 8);
+        font-size: 5rem;
+    }
+    .childa h3{ 
+        color:white;
+        font-size: 2rem;
+    }
+    .childb input{
+        display:grid;
+        margin-top:1rem;
+        padding:4%;
+        width:100%;
+        border-radius:100px;
+    }
+    #continue{
+        background-color:rgb(227, 74, 8);
+        color: white;
+        font-size: 1.5rem;
+    }
+    #continue:hover{
+        background-color: orangered;
+    }
+    h2:nth-child(2){
+        color: rgb(227, 74, 8);
+        color: white;
+    }
+    .links{
+        display: flex;
+        justify-content: space-between;
+        margin-top: 1rem;
+    }
+    .links a{
+        text-decoration: none;
+        color: white;
+        font-size: 1.2rem;
+    }
+    .links a:hover{
+        color: rgb(227, 74, 8);
+    }
+    .guest{
+        background-color: white;
+        color: rgb(227, 74, 8);
+        font-size: 1.5rem;
+        padding: 1% 2%;
+        border: none;
+        cursor: pointer;
+        margin-top: 1rem;
+        border-radius: 100px;
+        font-weight: bold;
+        font-family: Arial, Helvetica, sans-serif;
+    }
+    .guest:hover{
+        background-color: rgb(227, 74, 8);
+        color: white;
+    }
+    .guest a{
+        text-decoration: none;
+        color: rgb(227, 74, 8);
+    }
+    .guest :hover{
+        color: white;
+    }
+    </style>
+    </head>
+<body>
+    <div class="login">
+        <div class="childa">
+            <h2>Instant</h2>
+            <h3>Groceries delivered in 10 minutes</h3>
+        </div>
+        <div class="childb">
+            <form action="page1.html" id="123">
+                <input type="email" placeholder="abc@gmail.com" id="login">
+                <input type="password" placeholder="Password" id="password">
+                <div class="links">
+                <a href="signup.html" id="signup"> Don't have an account ? Sign Up</a>
+                <a href="forgot.html" id="forgot">Forgot Password?</a>
+                </div>
+                <input type="submit" value="Continue" id="continue"><br>
+                <button class="guest"><a href="page1.html">Login as a Guest</a></button>
+            </form>
+        </div>
+    </div>
+    <script type="module">
+         // Import the functions you need from the SDKs you need
+         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-app.js";
+         import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-auth.js";
+         // TODO: Add SDKs for Firebase products that you want to use
+         // https://firebase.google.com/docs/web/setup#available-libraries
+       
+         // Your web app's Firebase configuration
+         const firebaseConfig = {
+           apiKey: "AIzaSyDhdNXZSfEgOdtA5Q8EgK8mHxpZqirQAIw",
+           authDomain: "login-sign-924a1.firebaseapp.com",
+           projectId: "login-sign-924a1",
+           storageBucket: "login-sign-924a1.firebasestorage.app",
+           messagingSenderId: "179765758950",
+           appId: "1:179765758950:web:99e4b5c74f078fc268e427"
+         };
+         const app = initializeApp(firebaseConfig);
+         const auth = getAuth(app);
+         let form=document.getElementById("123");
+         console.log(form);
+         form.addEventListener("submit",function(event){
+            event.preventDefault();
+            let login=document.getElementById("login").value;
+            let password=document.getElementById("password").value;
+            console.log(login,password);
+            signInWithEmailAndPassword(auth,login, password)
+           .then((userCredential) => {
+             // Signed in 
+             const user = userCredential.user;
+                alert("User Signed In Successfully");
+                window.location.href="page1.html";
+                console.log("succesfully signed in");
+             // ...
+           })
+           .catch((error) => {
+             const errorCode = error.code;
+             const errorMessage = error.message;
+                alert(errorMessage);
+           });
+         });
+        
+       
+         // Initialize Firebase
+       //reset password
+      // import { sendPasswordResetEmail } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-auth.js";
+      // let forgot=document.getElementById("forgot");
+      // forgot.addEventListener("click",function(){
+      //  let email=document.getElementById("login").value;
+
+       // const auth = getAuth(app);
+     //   sendPasswordResetEmail(auth,email)
+       //   .then(() => {
+            // Password reset email sent!
+            // ..
+          //  alert("Password reset email sent! Please check your inbox.");
+       //   })
+         // .catch((error) => {
+           // const errorCode = error.code;
+        //    const errorMessage = error.message;
+           // alert(errorMessage);
+        //  });
+       //})
+         
+    
+       
+         
+    </script>
+    </body>
+
+
+
+
+
+
+
+
+            
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</html>

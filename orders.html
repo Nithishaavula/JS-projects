@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>My Orders</title>
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      background: linear-gradient(to right, #f8f9fa, #e0eafc);
+      margin: 0;
+      padding: 20px;
+      display: flex;
+      justify-content: center;
+    }
+
+    #container {
+      max-width: 700px;
+      background: white;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    }
+
+    h1, h2 {
+      text-align: center;
+      color: #333;
+    }
+
+    .order-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin: 10px 0;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+    }
+
+    .order-details {
+      flex: 1;
+    }
+
+    .order-status {
+      font-weight: bold;
+    }
+
+    .btn-back {
+      display: block;
+      margin: 20px auto;
+      padding: 10px 20px;
+      background-color: #28a745;
+      color: white;
+      border-radius: 8px;
+      text-align: center;
+      text-decoration: none;
+    }
+  </style>
+</head>
+<body>
+  <div id="container">
+    <h1>My Orders</h1>
+    <div id="ordersList"></div>
+    <a href="index.html" class="btn-back">Back to Cart</a>
+  </div>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const ordersList = document.getElementById("ordersList");
+
+      // Retrieve the orders from localStorage
+      const orders = JSON.parse(localStorage.getItem("orders")) || [];
+      
+      if (orders.length === 0) {
+        ordersList.innerHTML = "<p>No orders found.</p>";
+        return;
+      }
+
+      // Loop through each order and create an order row
+      orders.forEach(order => {
+        const orderRow = document.createElement("div");
+        orderRow.classList.add("order-row");
+
+        let orderDetails = `
+          <div class="order-details">
+            <p><strong>Order ID:</strong> ${order.id}</p>
+            <p><strong>Total:</strong> ${order.total}</p>
+            <p><strong>Status:</strong> ${order.paymentStatus}</p>
+        `;
+
+        if (order.paymentStatus === "UPI" && order.screenshot) {
+          orderDetails += `<p><strong>Payment Screenshot:</strong> ${order.screenshot}</p>`;
+        }
+
+        orderDetails += `</div>`;
+
+        orderRow.innerHTML = orderDetails;
+        ordersList.appendChild(orderRow);
+      });
+    });
+  </script>
+</body>
+</html>
